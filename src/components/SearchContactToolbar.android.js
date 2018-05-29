@@ -60,6 +60,10 @@ class SearchContactToolbarAndroid extends Component {
     updateSearchQuery: noOp
   };
 
+  state = {
+    shouldAnimate: false
+  };
+
   renderSearchBar = () => (
     <SearchBar
       autoFocus
@@ -88,14 +92,17 @@ class SearchContactToolbarAndroid extends Component {
 
   handleStartSearch = () => {
     this.props.startSearch();
+    this.setState(prev => ({ ...prev, shouldAnimate: true }));
   };
 
   handleEndSearch = () => {
     this.props.endSearch();
+    this.setState(prev => ({ ...prev, shouldAnimate: true }));
   };
 
   handleUpdateSearchQuery = query => {
     this.props.updateSearchQuery(query);
+    this.setState(prev => ({ ...prev, shouldAnimate: false }));
   };
 
   setUpBackButtonBehavior = () => {
@@ -115,14 +122,17 @@ class SearchContactToolbarAndroid extends Component {
   }
 
   render() {
-    const animationConfig = LayoutAnimation.create(
-      150,
-      LayoutAnimation.Types.easeInEaseOut,
-      LayoutAnimation.Properties.opacity
-    );
-    LayoutAnimation.configureNext(animationConfig);
-
+    const { shouldAnimate } = this.state;
     const { isSearching } = this.props;
+
+    if (shouldAnimate) {
+      const animationConfig = LayoutAnimation.create(
+        150,
+        LayoutAnimation.Types.easeInEaseOut,
+        LayoutAnimation.Properties.opacity
+      );
+      LayoutAnimation.configureNext(animationConfig);
+    }
 
     const renderTopComponent = isSearching
       ? this.renderSearchBar
