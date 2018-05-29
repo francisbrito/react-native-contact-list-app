@@ -50,15 +50,23 @@ ContactList.propTypes = {
     })
   ),
   refreshing: PropTypes.bool,
-  fetchContacts: PropTypes.func,
+  fetchContacts: PropTypes.func
 };
 
 ContactList.defaultProps = {
   contacts: [],
-  refreshing: false,
+  refreshing: false
 };
 
-const mapStateToProps = ({ fetching }) => ({ refreshing: fetching });
+const filterContacts = ({ query, contacts }) =>
+  !query
+    ? contacts
+    : contacts.filter(c => c.fullName.includes(query.toLowerCase()));
+
+const mapStateToProps = ({ fetching, contacts, query }) => ({
+  refreshing: fetching,
+  contacts: filterContacts({ query, contacts })
+});
 const mapDispatchToProps = {
   startFetching,
   endFetching,

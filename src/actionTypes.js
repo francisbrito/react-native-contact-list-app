@@ -8,4 +8,5 @@ export default keyMirror({
   START_FETCHING: true,
   DONE_FETCHING: true,
   FETCH_CONTACTS: true,
+  FILTER_CONTACTS: true,
 });
