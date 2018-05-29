@@ -9,4 +9,8 @@ export default keyMirror({
   DONE_FETCHING: true,
   FETCH_CONTACTS: true,
   FILTER_CONTACTS: true,
+  SAVE_CONTACT: true,
+  SET_FIRST_NAME: true,
+  SET_LAST_NAME: true,
+  SET_PICTURE: true,
 });
