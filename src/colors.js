@@ -6,3 +6,4 @@ export const TEXT = "#FFF";
 export const ICON = "#FFF";
 export const SECONDARY_TEXT = "#757575"
 export const DIVIDER = "#BDBDBD";
+export const WHITE = "#FFF";

@@ -15,13 +15,17 @@ const styles = StyleSheet.create({
     flex: 1
   },
   addContactButtonContainer: {
-    position: 'absolute',
+    position: "absolute",
     bottom: 0,
-    right: 0,
+    right: 0
   }
 });
 
 class MainScreenAndroid extends Component {
+  static navigationOptions = {
+    header: () => <SearchContactToolbar />
+  };
+
   static propTypes = {
     contacts: PropTypes.arrayOf(
       PropTypes.shape({
@@ -40,8 +44,11 @@ class MainScreenAndroid extends Component {
   };
 
   componentDidMount() {
-    getContacts()
-      .then(this.props.refreshContacts);
+    getContacts().then(this.props.refreshContacts);
+  }
+
+  handleOpenAddContactScreen = () => {
+    this.props.navigation.navigate('AddContact');
   }
 
   render() {
@@ -49,9 +56,8 @@ class MainScreenAndroid extends Component {
 
     return (
       <View style={styles.container}>
-        <SearchContactToolbar />
         <ContactList contacts={contacts} />
-        <AddContactButton containerStyle={styles.addContactButtonContainer} />
+        <AddContactButton onPress={this.handleOpenAddContactScreen} containerStyle={styles.addContactButtonContainer} />
       </View>
     );
   }

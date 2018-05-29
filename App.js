@@ -8,10 +8,12 @@ import React from "react";
 import { StyleSheet, View, StatusBar } from "react-native";
 import { createStore } from "redux";
 import { Provider } from "react-redux";
+import { createStackNavigator } from 'react-navigation';
+
 
 import reducer from "./src/reducers";
 import { DARK_PRIMARY } from "./src/colors";
-import { MainScreen } from "./src/components";
+import { MainScreen, AddContactScreen } from "./src/components";
 
 const styles = StyleSheet.create({
   container: {
@@ -19,14 +21,18 @@ const styles = StyleSheet.create({
   }
 });
 const store = createStore(reducer);
+const Navigator = createStackNavigator({
+  Main: MainScreen,
+  AddContact: AddContactScreen,
+})
 
 const App = () => (
-    <Provider store={store}>
-      <View style={styles.container}>
-        <StatusBar backgroundColor={DARK_PRIMARY} />
-        <MainScreen />
-      </View>
-    </Provider>
-  );
+  <Provider store={store}>
+    <View style={styles.container}>
+      <StatusBar backgroundColor={DARK_PRIMARY} />
+      <Navigator />
+    </View>
+  </Provider>
+);
 
 export default App;

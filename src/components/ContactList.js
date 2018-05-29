@@ -2,13 +2,10 @@ import React from "react";
 import { View, FlatList, Text, StyleSheet } from "react-native";
 import { Icon } from "react-native-elements";
 
+import { Contact } from ".";
 import { DIVIDER } from "../colors";
 
 const styles = StyleSheet.create({
-  contactList: {
-    justifyContent: "center",
-    alignItems: "center"
-  },
   emptyListContainer: {
     flex: 1,
     justifyContent: "center",
@@ -20,7 +17,7 @@ const styles = StyleSheet.create({
 });
 
 const getKey = item => item.id;
-const renderContact = ({ item }) => <Text>{item.fullName}</Text>;
+const renderContact = ({ item }) => <Contact {...item} />;
 const renderEmptyList = () => (
   <View style={styles.emptyListContainer}>
     <Icon size={64} name="mood-bad" color={DIVIDER} />
@@ -30,7 +27,6 @@ const renderEmptyList = () => (
 const ContactList = ({ contacts }) =>
   contacts && contacts.length > 0 ? (
     <FlatList
-      contentContainerStyle={styles.contactList}
       data={contacts}
       keyExtractor={getKey}
       renderItem={renderContact}
