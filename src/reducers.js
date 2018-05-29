@@ -12,7 +12,7 @@ export default function reducer(state = { newContact: {} }, action) {
     case ActionTypes.START_SEARCH:
       return { ...state, isSearching: true };
     case ActionTypes.END_SEARCH:
-      return { ...state, isSearching: false };
+      return { ...state, isSearching: false, query: null };
     case ActionTypes.UPDATE_SEARCH_QUERY:
       return { ...state, query: action.payload.query };
     case ActionTypes.REFRESH_CONTACTS:
