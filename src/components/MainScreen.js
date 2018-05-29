@@ -1,7 +1,7 @@
 /* @flow */
 
 import React, { Component } from "react";
-import { View, StyleSheet } from "react-native";
+import { View, StyleSheet, ActivityIndicator } from "react-native";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
@@ -16,6 +16,11 @@ const styles = StyleSheet.create({
     position: "absolute",
     bottom: 0,
     right: 0
+  },
+  loadingIndicatorContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center"
   }
 });
 
@@ -31,14 +36,16 @@ class MainScreenAndroid extends Component {
         fullName: PropTypes.string.isRequired
       })
     ),
-    fetchContacts: PropTypes.func
+    fetchContacts: PropTypes.func,
+    fetching: PropTypes.bool
   };
 
   static defaultProps = {
     contacts: [],
     fetchContacts: () => {
       /* no-op */
-    }
+    },
+    fetching: false
   };
 
   componentDidMount() {
@@ -50,11 +57,17 @@ class MainScreenAndroid extends Component {
   };
 
   render() {
-    const { contacts } = this.props;
+    const { contacts, fetching } = this.props;
 
     return (
       <View style={styles.container}>
-        <ContactList contacts={contacts} />
+        {fetching ? (
+          <View style={styles.loadingIndicatorContainer}>
+            <ActivityIndicator size="large" />
+          </View>
+        ) : (
+          <ContactList contacts={contacts} />
+        )}
         <AddContactButton
           onPress={this.handleOpenAddContactScreen}
           containerStyle={styles.addContactButtonContainer}
@@ -64,7 +77,7 @@ class MainScreenAndroid extends Component {
   }
 }
 
-const mapStateToProps = ({ contacts }) => ({ contacts });
+const mapStateToProps = ({ contacts, fetching }) => ({ contacts, fetching });
 const mapDispatchToProps = {
   fetchContacts
 };
