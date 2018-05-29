@@ -5,10 +5,8 @@ import { View, StyleSheet } from "react-native";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
-import { refreshContacts } from "../actions";
-
 import { AddContactButton, SearchContactToolbar, ContactList } from ".";
-import { getContacts } from "../ContactListProvider";
+import { fetchContacts } from "../actions";
 
 const styles = StyleSheet.create({
   container: {
@@ -33,23 +31,23 @@ class MainScreenAndroid extends Component {
         fullName: PropTypes.string.isRequired
       })
     ),
-    refreshContacts: PropTypes.func
+    fetchContacts: PropTypes.func
   };
 
   static defaultProps = {
     contacts: [],
-    refreshContacts: () => {
+    fetchContacts: () => {
       /* no-op */
     }
   };
 
   componentDidMount() {
-    getContacts().then(this.props.refreshContacts);
+    this.props.fetchContacts();
   }
 
   handleOpenAddContactScreen = () => {
-    this.props.navigation.navigate('AddContact');
-  }
+    this.props.navigation.navigate("AddContact");
+  };
 
   render() {
     const { contacts } = this.props;
@@ -57,7 +55,10 @@ class MainScreenAndroid extends Component {
     return (
       <View style={styles.container}>
         <ContactList contacts={contacts} />
-        <AddContactButton onPress={this.handleOpenAddContactScreen} containerStyle={styles.addContactButtonContainer} />
+        <AddContactButton
+          onPress={this.handleOpenAddContactScreen}
+          containerStyle={styles.addContactButtonContainer}
+        />
       </View>
     );
   }
@@ -65,7 +66,7 @@ class MainScreenAndroid extends Component {
 
 const mapStateToProps = ({ contacts }) => ({ contacts });
 const mapDispatchToProps = {
-  refreshContacts
+  fetchContacts
 };
 
 export default connect(

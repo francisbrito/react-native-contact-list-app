@@ -10,6 +10,10 @@ export default function reducer(state = {}, action) {
       return { ...state, query: action.payload.query };
     case ActionTypes.REFRESH_CONTACTS:
       return { ...state, contacts: action.payload.contacts };
+    case ActionTypes.START_FETCHING:
+      return { ...state, fetching: true };
+    case ActionTypes.DONE_FETCHING:
+      return { ...state, fetching: false };
     default:
       return state;
   }

@@ -6,10 +6,11 @@
 
 import React from "react";
 import { StyleSheet, View, StatusBar } from "react-native";
-import { createStore } from "redux";
+import { createStore, applyMiddleware } from "redux";
 import { Provider } from "react-redux";
-import { createStackNavigator } from 'react-navigation';
-
+import { createStackNavigator } from "react-navigation";
+import thunk from "redux-thunk";
+import logger from "redux-logger";
 
 import reducer from "./src/reducers";
 import { DARK_PRIMARY } from "./src/colors";
@@ -20,11 +21,15 @@ const styles = StyleSheet.create({
     flex: 1
   }
 });
-const store = createStore(reducer);
+const store = createStore(
+  reducer,
+  applyMiddleware(thunk),
+  applyMiddleware(logger)
+);
 const Navigator = createStackNavigator({
   Main: MainScreen,
-  AddContact: AddContactScreen,
-})
+  AddContact: AddContactScreen
+});
 
 const App = () => (
   <Provider store={store}>
