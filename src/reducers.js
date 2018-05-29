@@ -3,9 +3,7 @@ import cuid from "cuid";
 
 const createContact = ({ firstName, lastName, picture }) => ({
   id: cuid(),
-  firstName,
-  lastName,
-  fullName: `${firstName} ${lastName}`,
+  fullName: `${firstName} ${lastName}`.toLowerCase(),
   picture
 });
 
