@@ -67,6 +67,9 @@ class SearchContactToolbarAndroid extends Component {
   renderSearchBar = () => (
     <SearchBar
       autoFocus
+      enablesReturnKeyAutomatically
+      returnKeyType="search"
+      autoCapitalize="words"
       searchIcon={null}
       cancelIcon={{ color: DARK_PRIMARY }}
       onCancel={this.handleEndSearch}

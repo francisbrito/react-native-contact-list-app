@@ -32,6 +32,16 @@ class AddContactScreen extends Component {
     header: () => <AddContactToolbar navigation={navigation} />
   });
 
+  inputs = {};
+
+  registerInput = id => ref => {
+    this.inputs[id] = ref;
+  };
+
+  focusInput = id => () => {
+    this.inputs[id].focus();
+  };
+
   render() {
     const {
       firstName,
@@ -57,14 +67,25 @@ class AddContactScreen extends Component {
         </TouchableOpacity>
         <View style={styles.formContainer}>
           <Input
+            autoFocus
+            enablesReturnKeyAutomatically
+            returnKeyType="next"
+            autoCapitalize="words"
             value={firstName}
             onChangeText={setFirstName}
             placeholder="First name"
+            ref={this.registerInput("firstName")}
+            onSubmitEditing={this.focusInput("lastName")}
+            blurOnSubmit={false}
           />
           <Input
+            enablesReturnKeyAutomatically
+            autoCapitalize="words"
+            returnKeyType="done"
             value={lastName}
             onChangeText={setLastName}
             placeholder="Last name"
+            ref={this.registerInput("lastName")}
           />
         </View>
       </View>
@@ -72,7 +93,10 @@ class AddContactScreen extends Component {
   }
 }
 
-const mapStateToProps = ({ newContact }) => ({ ...newContact, isPictureSet: !!newContact.picture });
+const mapStateToProps = ({ newContact }) => ({
+  ...newContact,
+  isPictureSet: !!newContact.picture
+});
 const mapDispatchToProps = {
   setFirstName,
   setLastName,
