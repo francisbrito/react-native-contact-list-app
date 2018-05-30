@@ -13,4 +13,5 @@ export default keyMirror({
   SET_FIRST_NAME: true,
   SET_LAST_NAME: true,
   SET_PICTURE: true,
+  CANCEL_NEW_CONTACT: true,
 });

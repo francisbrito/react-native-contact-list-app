@@ -5,7 +5,7 @@ import PropTypes from "prop-types";
 
 import { PRIMARY, TEXT } from "../colors";
 import { CLOSE_ICON, DONE_ICON } from "../icons";
-import { saveContact } from "../actions";
+import { saveContact, cancelNewContact } from "../actions";
 
 const styles = StyleSheet.create({
   toolbar: {
@@ -22,7 +22,9 @@ const ACTIONS = [
   }
 ];
 
-const handleCancel = ({ navigation }) => () => {
+const handleCancel = ({ navigation, cancelNewContact }) => () => {
+  cancelNewContact();
+
   navigation.goBack();
 };
 
@@ -32,30 +34,33 @@ const handleSaveContact = ({ navigation, saveContact }) => () => {
   navigation.goBack();
 };
 
-const AddContactToolbar = ({ navigation, saveContact }) => (
+const AddContactToolbar = ({ navigation, saveContact, cancelNewContact }) => (
   <ToolbarAndroid
     navIcon={CLOSE_ICON}
     titleColor={TEXT}
     style={styles.toolbar}
     actions={ACTIONS}
-    onIconClicked={handleCancel({ navigation })}
+    onIconClicked={handleCancel({ navigation, cancelNewContact })}
     onActionSelected={handleSaveContact({ navigation, saveContact })}
   />
 );
 
 AddContactToolbar.propTypes = {
   navigation: PropTypes.any,
-  saveContact: PropTypes.func
+  saveContact: PropTypes.func,
+  cancelNewContact: PropTypes.func,
 };
 
+const noOp = () => { /* noOp */ };
+
 AddContactToolbar.defaultProps = {
-  saveContact: () => {
-    /* no-op */
-  }
+  saveContact: noOp ,
+  cancelNewContact: noOp,
 };
 
 const mapDispatchToProps = {
-  saveContact
+  saveContact,
+  cancelNewContact
 };
 
 export default connect(

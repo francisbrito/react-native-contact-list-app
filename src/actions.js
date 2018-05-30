@@ -44,3 +44,5 @@ export const pickPicture = () => (dispatch) => {
     dispatch(setPicture(response.uri));
   });
 }
+
+export const cancelNewContact = createAction(ActionTypes.CANCEL_NEW_CONTACT);

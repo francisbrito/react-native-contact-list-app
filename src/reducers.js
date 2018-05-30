@@ -39,7 +39,13 @@ export default function reducer(state = { newContact: {} }, action) {
     case ActionTypes.SAVE_CONTACT:
       return {
         ...state,
-        contacts: [createContact(state.newContact)].concat(state.contacts)
+        contacts: [createContact(state.newContact)].concat(state.contacts),
+        newContact: {}
+      };
+    case ActionTypes.CANCEL_NEW_CONTACT:
+      return {
+        ...state,
+        newContact: {}
       };
     default:
       return state;
